@@ -2,7 +2,7 @@
 	<div class="row justify-content-center">
 		<div class="col-md-6">
 			<div class="card">
-				<div class="card-header text-center">Register</div>
+				<div class="card-header text-center"><h4><b>Register</b></h4></div>
 				<div class="card-body">
 					<form>
 						<div class="form-group">
