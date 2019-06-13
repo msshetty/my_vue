@@ -2,6 +2,12 @@ import Vue from 'vue'
 import App from './App.vue'
 
 import router from './router.js'
+
+import VueAxios from 'vue-axios'
+import axios from 'axios'
+Vue.use(VueAxios, axios)
+
+const Base_url = 'http://192.168.1.7'
 // import Router from 'vue-router'
 // Vue.use(Router)
 

@@ -3,9 +3,13 @@
 		<div class="col-md-12">
 			<h4 class="text-center"><b>Student Table</b></h4><br>
 			<div>
-			  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+				<div class="alert alert-success alert-dismissible" style="display:none">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                </div>
+                <router-link class="btn btn-primary" :to="{name: 'student_create'}">New Student</router-link>
+			  <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
 			    New Student
-			  </button><br><br>
+			  </button> --><br><br>
 			  <div class="modal fade" id="myModal">
 			    <div class="modal-dialog">
 			      <div class="modal-content">
@@ -14,25 +18,25 @@
 			          <button type="button" class="close" data-dismiss="modal">&times;</button>
 			        </div>
 			        <div class="modal-body">
-			          	<form>
+			          	<form @submit.prevent="addPost">
 							<div class="form-group">
 								<label>Name</label>
-								<input type="text" name="name" class="form-control" required>
+								<input type="text" name="name" v-model="students.name" class="form-control" required>
 							</div>
 							<div class="form-group">
 								<label>Email</label>
-								<input type="text" name="email" class="form-control" required>
+								<input type="text" v-model="students.email" name="email" class="form-control" required>
 							</div>
 							<div class="form-group">
 								<label>Phone</label>
-								<input type="text" name="phone" class="form-control" required>
+								<input type="text" v-model="students.phone" name="phone" class="form-control" required>
 							</div>
 							<div class="form-group">
 								<label>College</label>
-								<input type="text" name="college" class="form-control" required>
+								<input type="text" v-model="students.college" name="college" class="form-control" required>
 							</div>
 							<div class="form-group">
-								<input type="submit" class="btn btn-primary">
+								<button class="btn btn-primary">Create</button>
 							</div>
 						</form>
 			        </div>
@@ -58,17 +62,18 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>1</td>
-							<td>Guru</td>
-							<td>8971301502</td>
-							<td>guru@gmail.com</td>
-							<td>Govt Engg College</td>
-							<td>
-								<a href="#" class="btn btn-warning">Edit</a>&nbsp;
-								<a href="#" class="btn btn-danger">Delete</a>
-							</td>
-						</tr>
+						<tr v-for="post in posts" :key="post.id">
+		                    <td>{{ post.id }}</td>
+		                    <td>{{ post.name }}</td>
+		                    <td>{{ post.phone }}</td>
+		                    <td>{{ post.email }}</td>
+		                    <td>{{ post.college }}</td>
+		                    <td>
+		                    	<router-link :to="{name: 'student_edit', params: { id: post.id }}" class="btn btn-primary">Edit</router-link>&nbsp;
+		                    	<button class="btn btn-danger" @click = "deletePost(post.id)">Delete</button>
+
+		                    </td>		    
+		                </tr>
 					</tbody>
 				</table>
 			</div>
@@ -76,7 +81,40 @@
 	</div>
 </template>
 <script>
-	export default{
-		
-	}
+	export default {
+      data() {
+        return {
+          posts: [],
+          students: {}
+        }
+      },
+      created() {
+      let uri = 'http://192.168.1.7/api/student';
+      this.axios.get(uri).then(response => {
+        this.posts = response.data.data;
+      });
+    },
+    methods: {
+      deletePost(id)
+      {
+        let uri = `http://192.168.1.7/api/student_delete/${id}`;
+        this.axios.get(uri).then(response => {
+          this.posts.splice(this.posts.indexOf(id), 1);
+        });
+      },
+
+      addPost() {
+      	let uri = 'http://192.168.1.7/api/student_store';
+      	this.axios.post(uri, this.students).then((response) =>{
+      		//this.$router.push({ name: 'student'});
+      		$('.modal').each(function(){
+                $(this).modal('hide');
+            });
+            // jQuery('.alert').show();
+            // jQuery('.alert').html(data.success);  
+      	});
+
+      }
+    }
+  }
 </script>
