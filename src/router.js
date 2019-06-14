@@ -4,7 +4,8 @@ import Login from "./components/login.vue"
 import Register from "./components/register.vue"
 import Home from './components/home.vue'
 
-import Chat from './components/chat/group_chat.vue'
+import GroupChat from './components/chat/group_chat.vue'
+import Chat from './components/chat/index.vue'
 import Student from './components/student/index.vue'
 import StudentCreate from './components/student/create.vue'
 import StudentEdit from './components/student/edit.vue'
@@ -34,6 +35,7 @@ export default new Router({
             component: Register
         },
         { path: '/chat', name: 'chat', component: Chat },
+        { path: '/group_chat', name: 'group_chat', component: GroupChat },
         { path: '/student', name: 'student', component: Student },
         { path: '/student_create', name: 'student_create', component: StudentCreate },
         { path: '/student_edit/:id', name: 'student_edit', component: StudentEdit },

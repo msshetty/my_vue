@@ -10,18 +10,27 @@
 	      <li class="nav-item">
 	        <router-link class="nav-link" to="/">Home <span class="sr-only">(current)</span></router-link>
 	      </li>
-	      <li class="nav-item">
-	        <router-link class="nav-link" to="/chat" >Chat</router-link>
-	      </li>
+	      <!-- <li class="nav-item">
+	        <router-link class="nav-link" to="/group_chat" >Chat</router-link>
+	      </li> -->
 	      <li class="nav-item">
 	        <router-link class="nav-link" to="/student" >Student</router-link>
 	      </li>
 	      <li class="nav-item">
 	        <router-link class="nav-link" to="/file" >File</router-link>
 	      </li>
-	      <!-- <li class="nav-item">
-	        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-	      </li> -->
+	      <li class="nav-item dropdown">
+	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	          Chat
+	        </a>
+	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+	          <router-link class="dropdown-item" to="/chat">Chat</router-link>
+	          <router-link class="dropdown-item" to="/group_chat">Group Chat</router-link>
+	          <a class="dropdown-item" href="#">Another action</a>
+	          <div class="dropdown-divider"></div>
+	          <a class="dropdown-item" href="#">Something else here</a>
+	        </div>
+	      </li>
 	    </ul>
 	    <ul class="navbar-nav navbar-right">
 	    	<li class="nav-item">

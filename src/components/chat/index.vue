@@ -1,15 +1,18 @@
 <template>
 	<div class="row justify-content-center">
 		<div class="col-md-6">
-			<div class="card" id="app">
-	          <div class="card-header"><h4>Chat Group</h4></div>
-	          <div class="card-body scroll" v-chat-scroll>
-	              <div class="messages" v-for="(msg, index) in messages" :key="index">
-	              	<small><b>{{ msg.user }}</b></small><br>
-	                  <small>{{ msg.message }}</small>
-	              </div>
-	          </div>
-		      
+			<div class="card">
+		      <div class="card-body">
+		          <div class="card-title">
+		              <h3>Chat Group</h3>
+		              <hr>
+		          </div>
+		          <div class="card-body">
+		              <div class="messages" v-for="(msg, index) in messages" :key="index">
+		                  <p><span class="font-weight-bold">{{ msg.user }}: </span>{{ msg.message }}</p>
+		              </div>
+		          </div>
+		      </div>
 		      <div class="card-footer">
 		          <form @submit.prevent="sendMessage">
 		              <div class="gorm-group">
@@ -40,19 +43,10 @@ export default {
             socket : io('http://192.168.1.7:3001')
         }
     },
-    created() {
-    	let uri = 'http://192.168.1.7/api/chat';
-    	this.axios.get(uri).then(response =>{
-    		this.messages = response.data.data;
-    	})
-    },
     methods: {
         sendMessage(e) {
             e.preventDefault();
-            let uri = 'http://192.168.1.7/api/chat_store';
-            this.axios.post(uri, {user:this.user, message:this.message}).then((response)=>{
-
-		    });
+            
             this.socket.emit('SEND_MESSAGE', {
                 user: this.user,
                 message: this.message
@@ -70,15 +64,5 @@ export default {
 </script>
 
 <style>
-.scroll{
-    height: 60vh;
-    overflow-y: auto;
-}
 
-.messages{
-	padding: 10pt;
-    border-radius: 5pt;
-    margin: 5pt;
-    background-color: #ccd7e0;
-}
 </style>
