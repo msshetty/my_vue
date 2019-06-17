@@ -2,7 +2,7 @@
 	<div class="row justify-content-center">
 		<div class="col-md-6">
 			<div class="card" id="app">
-	          <div class="card-header"><h4>Chat Group</h4></div>
+	          <div class="card-header"><h4>Chat Group</h4><span class="float-right">{{connectionCount}} connections</span></div>
 	          <div class="card-body scroll" v-chat-scroll>
 	              <div class="messages" v-for="(msg, index) in messages" :key="index">
 	              	<small><b>{{ msg.user }}</b></small><br>
@@ -37,6 +37,8 @@ export default {
             user: '',
             message: '',
             messages: [],
+            online: [],
+            connectionCount: 0,
             socket : io('http://192.168.1.7:3001')
         }
     },
@@ -44,7 +46,12 @@ export default {
     	let uri = 'http://192.168.1.7/api/chat';
     	this.axios.get(uri).then(response =>{
     		this.messages = response.data.data;
-    	})
+    	});
+
+    	socket.on('noOfConnections', (count) => {
+            this.connectionCount = count
+        });
+    	
     },
     methods: {
         sendMessage(e) {
@@ -65,6 +72,9 @@ export default {
             this.messages = [...this.messages, data];
             // you can also do this.messages.push(data)
         });
+
+
+        
     }
 }
 </script>
